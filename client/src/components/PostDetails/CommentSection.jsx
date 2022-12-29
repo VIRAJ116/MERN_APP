@@ -13,12 +13,12 @@ const CommentSection = ({ post }) => {
   const classes = useStyles();
   const commentsRef = useRef();
 
-  const handleClick = async () => {
+  const handleComment = async () => {
     const newComments = await dispatch(commentPost(`${user?.result?.name}: ${comment}`, post._id));
 
-    setComments(newComments);
     setComment('');
- 
+    setComments(newComments);
+
     commentsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -35,23 +35,14 @@ const CommentSection = ({ post }) => {
           ))}
           <div ref={commentsRef} />
         </div>
-        {user.result.name && (
         <div style={{ width: '70%' }}>
           <Typography gutterBottom variant="h6">Write a comment</Typography>
-          <TextField 
-                fullWidth 
-                rows={4} 
-                variant="outlined" 
-                label="Comment" 
-                multiline 
-                value={comment} 
-                onChange={(e) => setComment(e.target.value)} />
+          <TextField fullWidth rows={4} variant="outlined" label="Comment" multiline value={comment} onChange={(e) => setComment(e.target.value)} />
           <br />
-          <Button style={{ marginTop: '10px' }} fullWidth disabled={!comment.length} color="primary" variant="contained" onClick={handleClick}>
+          <Button style={{ marginTop: '10px' }} fullWidth disabled={!comment.length} color="primary" variant="contained" onClick={handleComment}>
             Comment
           </Button>
         </div>
-        )}
       </div>
     </div>
   );
